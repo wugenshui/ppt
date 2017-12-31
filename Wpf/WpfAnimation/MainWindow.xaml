@@ -1,0 +1,225 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:local="clr-namespace:ui.Convert"
+        x:Name="window" mc:Ignorable="d" x:Class="ui.MainWindow"
+        Title="MainWindow" Height="620" Width="870" WindowStartupLocation="CenterScreen"
+        Style="{DynamicResource NoResize_window}" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <!--页面资源-->
+    <Window.Resources>
+        <!--路径资源-->
+        <PathGeometry x:Key="path">
+            <PathFigure>
+                <!-- 贝塞尔曲线 -->
+                <BezierSegment Point1="0,0" Point2="200,000" Point3="500,380"></BezierSegment>
+                <BezierSegment Point1="500,380" Point2="700,310" Point3="900,290"></BezierSegment>
+            </PathFigure>
+        </PathGeometry>
+        <PathGeometry x:Key="line1">
+            <PathFigure>
+                <LineSegment Point="0,0"></LineSegment>
+                <LineSegment Point="400,0"></LineSegment>
+            </PathFigure>
+        </PathGeometry>
+        <PathGeometry x:Key="line2">
+            <PathFigure>
+                <LineSegment Point="0,0"></LineSegment>
+                <LineSegment Point="700,0"></LineSegment>
+            </PathFigure>
+        </PathGeometry>
+    </Window.Resources>
+    <!--背景图-->
+    <Window.Background>
+        <ImageBrush ImageSource="/Image/bg.png" Stretch="Uniform"/>
+    </Window.Background>
+    <Grid>
+        <!--底部-->
+        <StatusBar Height="31.5" VerticalAlignment="Bottom" Style="{DynamicResource StatusBarStyle}" Margin="0">
+            <StatusBar.Background>
+                <ImageBrush ImageSource="/Image/60007.bmp"/>
+            </StatusBar.Background>
+            <StatusBarItem Content="主程序版本:0.1.3" Margin="7,0,0,0"/>
+        </StatusBar>
+        <!--主体-->
+        <TabControl Margin="0,0,0,31.5" Background="{x:Null}" Style="{DynamicResource TabControlStyle}" MouseDown="TabControl_MouseDown" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="线性动画" Margin="10,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+                <TabItem.Background>
+                    <ImageBrush ImageSource="/Image/fullbox_netspeed.png" Stretch="Uniform"/>
+                </TabItem.Background>
+                <StackPanel Margin="20">
+                    <Rectangle Fill="Red" Width="100" Height="100">
+                        <Rectangle.Triggers>
+                            <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard AutoReverse="True">
+                                        <DoubleAnimation Storyboard.TargetProperty="Width" From="100" To="200" Duration="0:0:1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Rectangle.Triggers>
+                    </Rectangle>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="多层动画" Margin="100,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+                <TabItem.Background>
+                    <ImageBrush ImageSource="/Image/fullbox_function_exam.png" Stretch="Uniform"/>
+                </TabItem.Background>
+                <StackPanel Margin="20">
+                    <Rectangle Width="100" Height="100">
+                        <Rectangle.Fill>
+                            <SolidColorBrush x:Name="RecColorBrush" Color="Blue" />
+                        </Rectangle.Fill>
+                        <Rectangle.Triggers>
+                            <EventTrigger RoutedEvent="Page.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                        <DoubleAnimation Storyboard.TargetProperty="Width" From="100" To="200" Duration="0:0:5" />
+                                        <ColorAnimation Storyboard.TargetName="RecColorBrush" Storyboard.TargetProperty="Color" From="Blue" To="Red" Duration="0:0:5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Rectangle.Triggers>
+                    </Rectangle>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="按钮动画" Margin="190,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+                <TabItem.Background>
+                    <ImageBrush ImageSource="/Image/fullbox_desk_clear.png" Stretch="Uniform"/>
+                </TabItem.Background>
+                <Grid>
+                    <Button Style="{StaticResource MyWpfButton}" Content="普普通通一按钮" Width="200" Height="40">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <!-- 高宽变小 -->
+                                        <DoubleAnimation Duration="0:0:0.25" To="190" Storyboard.TargetProperty="Width"></DoubleAnimation>
+                                        <DoubleAnimation Duration="0:0:0.25" To="36" Storyboard.TargetProperty="Height"></DoubleAnimation>
+                                        <!-- 高宽变大 -->
+                                        <DoubleAnimation BeginTime="0:0:0.25" Duration="0:0:0.1" Storyboard.TargetProperty="Width"></DoubleAnimation>
+                                        <DoubleAnimation BeginTime="0:0:0.25" Duration="0:0:0.1" Storyboard.TargetProperty="Height"></DoubleAnimation>
+                                        <!-- 隐藏 -->
+                                        <DoubleAnimation BeginTime="0:0:0.35" Duration="0:0:2" To="0" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+                                        <!-- 显示 -->
+                                        <DoubleAnimation BeginTime="0:0:3.35" Duration="0:0:2" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="关键帧" Margin="280,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+                <TabItem.Background>
+                    <ImageBrush ImageSource="/Image/fullbox_real_protect.png" Stretch="Uniform"/>
+                </TabItem.Background>
+                <Grid>
+                    <Ellipse Width="200" Height="200" Fill="Orange" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Ellipse.Triggers>
+                            <EventTrigger RoutedEvent="Mouse.MouseDown">
+                                <BeginStoryboard>
+                                    <Storyboard AutoReverse="True">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Width" Duration="0:0:4">
+                                            <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                                <DiscreteDoubleKeyFrame Value="220" KeyTime="0:0:1"></DiscreteDoubleKeyFrame>
+                                                <DiscreteDoubleKeyFrame Value="240" KeyTime="0:0:2"></DiscreteDoubleKeyFrame>
+                                                <DiscreteDoubleKeyFrame Value="260" KeyTime="0:0:3"></DiscreteDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames.KeyFrames>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Height" Duration="0:0:4">
+                                            <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                                <DiscreteDoubleKeyFrame Value="180" KeyTime="0:0:1"></DiscreteDoubleKeyFrame>
+                                                <DiscreteDoubleKeyFrame Value="160" KeyTime="0:0:2"></DiscreteDoubleKeyFrame>
+                                                <DiscreteDoubleKeyFrame Value="140" KeyTime="0:0:3"></DiscreteDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames.KeyFrames>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Ellipse.Triggers>
+                    </Ellipse>
+                </Grid>
+            </TabItem>
+            <TabItem Header="路径动画" Margin="370,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+                <TabItem.Background>
+                    <ImageBrush ImageSource="/Image/fullbox_strap_accelerate.png" Stretch="Uniform"/>
+                </TabItem.Background>
+                <Canvas>
+                    <Image Source="./Image/rabbit.jpg" Width="150" Height="150" Margin="0 50 0 0">
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Window.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Left)" PathGeometry="{StaticResource line1}" Duration="0:0:3" Source="X"></DoubleAnimationUsingPath>
+                                        <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Top)" PathGeometry="{StaticResource line1}" Duration="0:0:3" Source="Y"></DoubleAnimationUsingPath>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image Source="./Image/tortoise.jpg" Width="150" Height="150" Margin="0 200 0 0" >
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Window.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Left)" PathGeometry="{StaticResource line2}" Duration="0:0:12" Source="X"></DoubleAnimationUsingPath>
+                                        <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Top)" PathGeometry="{StaticResource line2}" Duration="0:0:12" Source="Y"></DoubleAnimationUsingPath>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <!-- 路径 -->
+                    <!--<Path Margin="30" Stroke="#ddd" Data="{StaticResource line1}"></Path>
+                    <Path Margin="30 300 30 30" Stroke="#ddd" Data="{StaticResource line2}"></Path>-->
+                </Canvas>
+            </TabItem>
+            <TabItem Header="其它路径" Margin="460,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+                <TabItem.Background>
+                    <ImageBrush ImageSource="/Image/fullbox_reg_clean.png" Stretch="Uniform"/>
+                </TabItem.Background>
+                <Canvas>
+                    <Image Source="./Image/football.jpg" Width="80" Height="80">
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Window.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Left)" PathGeometry="{StaticResource path}" Duration="0:0:3" Source="X"></DoubleAnimationUsingPath>
+                                        <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Top)" PathGeometry="{StaticResource path}" Duration="0:0:3" Source="Y"></DoubleAnimationUsingPath>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <!-- 路径 -->
+                    <!--<Path Margin="30" Stroke="Red" Data="{StaticResource path}"></Path>-->
+                </Canvas>
+            </TabItem>
+        </TabControl>
+        <!--顶部-->
+        <Button x:Name="x" Content="Button" HorizontalAlignment="Right" Height="24" Style="{DynamicResource xButtonStyle}" VerticalAlignment="Top" Width="39.75" Margin="0,1,0,0" Click="x_Click"/>
+        <Button x:Name="__" Content="Button" HorizontalAlignment="Right" Height="24" Style="{DynamicResource -ButtonStyle}" VerticalAlignment="Top" Width="39.75" Margin="0,1,39.75,0" Click="___Click"/>
+        <Button x:Name="menu"  HorizontalAlignment="Right" Height="24" VerticalAlignment="Top" Width="39.75" Margin="0,1,79.8,0" Click="menu_Click" Style="{DynamicResource meButtonStyle}"/>
+        <Popup x:Name="menu1" StaysOpen="False" Margin="0" PlacementTarget="{Binding ElementName=menu}" AllowsTransparency="True">
+            <Grid Height="78" Width="100" HorizontalAlignment="Left">
+                <Border BorderThickness="0" CornerRadius="3" Background="White" Margin="3">
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="0" Color="#FFB6B6B6"/>
+                    </Border.Effect>
+                    <StackPanel Margin="0">
+                        <MenuItem Header="设置" FontSize="12" Style="{DynamicResource MenuItemStyle}" Height="23.5" FontFamily="Microsoft YaHei"/>
+                        <MenuItem Header="关于" FontSize="12" Style="{DynamicResource MenuItemStyle}" Height="23.5" FontFamily="Microsoft YaHei"/>
+                        <MenuItem Header="退出" FontSize="12" Style="{DynamicResource MenuItemStyle}" Height="23.5" FontFamily="Microsoft YaHei" Background="#00000000"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Popup>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="WPF入门" VerticalAlignment="Top" Height="19.08" Margin="29.978,2,0,0" Width="68.603" FontSize="13.333" Foreground="White" FontFamily="Microsoft YaHei"/>
+        <Rectangle HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="17.667" StrokeThickness="0" Margin="4.995,3.33,0,0">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/Image/fullbox_time_protect.png" Stretch="Uniform"/>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Grid>
+</Window>

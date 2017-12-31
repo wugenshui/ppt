@@ -1,0 +1,22 @@
+﻿<Application x:Class="WpfDemo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WpfDemo"
+             StartupUri="webbrowser.xaml">
+    <Application.Resources>
+        <Style x:Key="baseBtn" TargetType="Button">
+            <Setter Property="FontSize" Value="50"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="Padding" Value="10"></Setter>
+        </Style>
+        <Style x:Key="redBtn" TargetType="Button" BasedOn="{StaticResource baseBtn}">
+            <Setter Property="Foreground" Value="Red"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Yellow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Application.Resources>
+</Application>

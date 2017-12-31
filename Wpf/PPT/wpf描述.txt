@@ -1,0 +1,72 @@
+1.什么是WPF
+WPF，Windows Presentation Foundation也，中文译为“Windows呈现基础”，是微软推出的用户界面框架
+
+
+2.wpf的特点
+wpf体验更好些，更炫
+XAML的引入，使得美工和程序可以实现分离
+强大的 “数据绑定”功能，使得MVVM得以实现，成为“属性驱动”，而非WinForm的“事件驱动”；属性的更改可以自动获得，甚至动过转换器触发各种展示/行为的变更
+Dependency Property
+Routed Events	Command
+DataTemplate、ControlTemplate
+
+更占内存，机器性能要求更高
+
+----资料
+
+
+基础介绍、布局、控件、dispatcher
+
+在WPF中提供了两种API，一种是用于普通编程的API，比如我们可以用C#、VB.NET等 语言进行编程，另一种是基于XML的API，称为XAML（Extensible Application Markup Language），引入XAML使得UI代码和应用程序逻辑代码完全分离，它是一种标记语言，支持声明式编程，由于XAML是基于XML的，所以它拥有 XML的所有规则和定义，非常容易进行扩展。
+
+
+看下面两段简单的代码：
+XAML代码：
+<Button Name="bt1" Background="Blue" Foreground="Red">
+  This is a button
+</Button>
+C#代码：
+Button btn1 = new Button();
+btn1.Content = "This is a button";
+btn1.Background = Brushes.Blue;
+btn1.Foreground = Brushes.Red;
+
+
+走进Dispatcher
+      所有 WPF 应用程序启动时都会加载两个重要的线程：一个用于呈现用户界面，另一个用于管理用户界面。呈现线程是一个在后台运行的隐藏线程，因此您通常面对的唯一线程 就是 UI 线程。WPF 要求将其大多数对象与 UI 线程进行关联。这称之为线程关联，意味着要使用一个 WPF 对象，只能在创建它的线程上使用。在其他线程上使用它会导致引发运行时异常。 UI 线程的作用是用于接收输入、处理事件、绘制屏幕以及运行应用程序代码。
+
+      在 WPF 中绝大部分控件都继承自 DispatcherObject，甚至包括 Application。这些继承自 DispatcherObject 的对象具有线程关联特征，也就意味着只有创建这些对象实例，且包含了 Dispatcher 的线程(通常指默认 UI 线程)才能直接对其进行更新操作。
+
+      DispatcherObject 类有两个主要职责：提供对对象所关联的当前 Dispatcher 的访问权限，以及提供方法以检查 (CheckAccess) 和验证 (VerifyAccess) 某个线程是否有权访问对象（派生于 DispatcherObject）。CheckAccess 与 VerifyAccess 的区别在于 CheckAccess 返回一个布尔值，表示当前线程是否可以使用对象，而 VerifyAccess 则在线程无权访问对象的情况下引发异常。通过提供这些基本的功能，所有 WPF 对象都支持对是否可在特定线程（特别是 UI 线程）上使用它们加以确定。
+	  
+MVVM模式，数据和视图分离
+灵活的控件组合，你可以修改已经存在的控件的外观
+Style可以让你应用不同的样式到不同的控件，而且易于管理
+高级的数据模板功能，可以根据需要以不同的样式呈现数据
+高级数据绑定功能，可以以各种灵活的方式绑定到数据对象
+高级动画支持，可以以声明的方式支持动画特性
+高级图形和3D支持
+1.XAML的引入，使得美工和程序可以实现分离，使得定制化主题/外观/行为更加方便也易于维护；
+2.强大的 “数据绑定”功能，使得MVVM得以实现，成为“属性驱动”，而非WinForm的“事件驱动”；属性的更改可以自动获得，甚至动过转换器触发各种展示/行为的变更；
+3.绚丽的展示效果，WPF（Windows Presentation Fundation）顾名思义其强大的图形化API为程序提供了超乎想象的图形效果；
+4.实在是。。。。太占资源了！！！
+
+
+MVVM（Model-View-ViewModel）
+如果说MVP是对MVC的进一步改进，那么MVVM则是思想的完全变革。它是将“数据模型数据双向绑定”的思想作为核心，因此在View和Model之间没有联系，通过ViewModel进行交互，而且Model和ViewModel之间的交互是双向的，因此视图的数据的变化会同时修改数据源，而数据源数据的变化也会立即反应到View上。
+这方面典型的应用有.NET的WPF，js框架Knockout、AngularJS等。
+MVVM即Model-View-View Model。这个模式提供对View和View Model的双向数据绑定。这使得View Model的状态改变可以自动传递给View。典型的情况是，View Model通过使用obsever模式（观察者模式）来将View Model的变化通知给model。
+01.Model
+Model层代表了描述业务逻辑和数据的一系列类的集合。它也定义了数据修改和操作的业务规则。
+02.View
+View代表了UI组件，像CSS，JQuery，html等。他只负责展示从Presenter接收到的数据。也就是把模型转化成UI。
+03.View Model
+View Model负责暴漏方法，命令，其他属性来操作VIew的状态，组装model作为View动作的结果，并且触发view自己的事件。
+MVVM模式关键点：
+01.用户和View交互。
+02.View和ViewModel是多对一关系。意味着一个ViewModel只映射多个View。
+03.View持有ViewModel的引用，但是ViewModel没有任何View的信息。
+04.View 和ViewModel之间有双向数据绑定关系。、
+
+简介XAML是eXtensible Application Markup Language的英文缩写，相应的中文名称为可扩展应用程序标记语言，它是微软公司为构建应用程序用户界面而创建的一种新的描述性语言。
+
