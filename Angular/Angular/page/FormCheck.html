@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html ng-app="TestFormModule" ng-controller="TestFormModule">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../style/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="../framework/jquery-1.10.2.js"></script>
+    <script src="../framework/angular.js"></script>
+    <style>
+        .ng-valid {
+        }
+
+        .ng-invalid {
+        }
+
+        .ng-pristine {
+        }
+
+        .ng-dirty {
+        }
+    </style>
+    <script>
+        var app = angular.module('TestFormModule', []);
+        // 配置post请求
+        app.config(function ($httpProvider) {
+            $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            $httpProvider.defaults.transformRequest = [function (data) {
+                return $.param(data);
+            }];
+        });
+        // 配置post请求
+        //app.config(function ($httpProvider) {
+        //    $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+        //    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        //    $httpProvider.defaults.transformRequest = [function (data) {
+        //        /**
+        //         * The workhorse; converts an object to x-www-form-urlencoded serialization.
+        //         * @param {Object} obj
+        //         * @return {String}
+        //         */
+        //            var param = function (obj) {
+        //            var query = '';
+        //            var name, value, fullSubName, subName, subValue, innerObj, i;
+
+        //            for (name in obj) {
+        //                value = obj[name];
+
+        //                if (value instanceof Array) {
+        //                    for (i = 0; i < value.length; ++i) {
+        //                        subValue = value[i];
+        //                        fullSubName = name + '[' + i + ']';
+        //                        innerObj = {};
+        //                        innerObj[fullSubName] = subValue;
+        //                        query += param(innerObj) + '&';
+        //                    }
+        //                } else if (value instanceof Object) {
+        //                    for (subName in value) {
+        //                        subValue = value[subName];
+        //                        fullSubName = name + '[' + subName + ']';
+        //                        innerObj = {};
+        //                        innerObj[fullSubName] = subValue;
+        //                        query += param(innerObj) + '&';
+        //                    }
+        //                } else if (value !== undefined && value !== null) {
+        //                    query += encodeURIComponent(name) + '='
+        //                        + encodeURIComponent(value) + '&';
+        //                }
+        //            }
+
+        //            return query.length ? query.substr(0, query.length - 1) : query;
+        //        };
+
+        //        return angular.isObject(data) && String(data) !== '[object File]'
+        //            ? param(data)
+        //            : data;
+        //    }];
+        //});
+        // 表单校验，整数
+        app.directive('integer', function () {
+            return {
+                require: 'ngModel',
+                link: function (scope, elm, attrs, ctrl) {
+                    ctrl.$parsers.unshift(function (viewValue) {
+                        // 如果为整数则通过
+                        if (/^\-?\d*$/.test(viewValue)) {
+                            ctrl.$setValidity('integer', true);
+                            return viewValue;
+                        } else {
+                            ctrl.$setValidity('integer', false);
+                            return undefined;
+                        }
+                    });
+                }
+            };
+        });
+
+        // 远程校验
+        app.directive('remoteValidation', function ($http) {
+            return {
+                require: 'ngModel',
+                link: function (scope, elm, attrs, ctrl) {
+                    elm.bind('keyup', function () {
+                        //$http({ method: 'GET', url: 'checkUserExist.ashx?username=' + scope.user.type }).
+                        //    success(function (data, status, headers, config) {
+                        //        debugger;
+                        //        if (data.toLowerCase() == "true") {
+                        //            ctrl.$setValidity('remote', true);
+                        //        } else {
+                        //            ctrl.$setValidity('remote', false);
+                        //        }
+                        //    }).
+                        //    error(function (data, status, headers, config) {
+                        //        ctrl.$setValidity('remote', false);
+                        //    });
+
+                        $http({
+                            method: 'POST',
+                            url: 'checkUserExist.ashx',
+                            data: { a: "aa", b: "比比" }
+                            //,
+                            //headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            //transformRequest: function (data) {
+                            //    return $.param(data);
+                            //}
+                        })
+
+                    });
+                }
+            };
+        });
+
+        app.controller("TestFormModule", function ($scope) {
+            $scope.user = {
+                userName: 'damoqiongqiu',
+                password: ''
+            };
+            $scope.save = function () {
+                console.log(form);
+                alert("保存数据!");
+            }
+        });
+    </script>
+</head>
+<body>
+    <form name="form" ng-submit="save()" ng-controller="TestFormModule" novalidate>
+        <input name="type" type="text" ng-model="user.type" pattern="[12345]" integer remote-validation />
+        <span ng-show="form.type.$error.integer" class="help-block">请输入一个数字</span>
+        <span ng-show="form.type.$error.remote" class="help-block">远程校验错误</span>
+        <input name="userName" type="text" ng-model="user.userName" required />
+        <input name="password" type="password" ng-model="user.password" required />
+        <input type="url" />
+        <input name="number" ng-model="user.age" type="number" min="1" max="5" />
+
+        <span ng-show="form.number.$error.min || form.number.$error.max" class="help-block">数值必须位于0到5之间！</span>
+        <input type="file" />
+        <input type="submit" ng-disabled="form.$invalid" />
+    </form>
+</body>
+</html>
