@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件传播</title>
+    <script src="../framework/angular.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <div ng-controller="demoCtrl">
+        {{count}}
+        <div ng-controller="demoCtrl">
+            {{count}}
+            <button ng-click="$emit('myEvent')">向上传播</button>
+            <button ng-click="$broadcast('myEvent')">向下传播</button>
+            <button ng-click="count=count+1;">不传播</button>
+            <!--//向上广播myEvent事件，则上面的count会加1，$broadcast(‘myEvent‘)是向下广播事件，下面的count会加1，ng-click="count=count+1"只有这个count加1，上下的count不加1.-->
+            <div ng-controller="demoCtrl">
+                {{count}}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        angular.module('demoApp', [])
+            .controller("demoCtrl", ["$scope", function ($scope) {
+                $scope.count = 0;
+                $scope.$on("myEvent", function (event) {
+                    $scope.count++;
+                });
+            }]);
+    </script>
+</body>
+
+</html>

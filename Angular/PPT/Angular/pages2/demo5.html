@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="../framework/angular.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <div class="container" ng-controller="demoCtrl">
+        <csdn></csdn>
+        <div csdn></div>
+        <div class="csdn"></div>
+        <br>
+        <u url="http://bbs.csdn.net/home" text="CSDN"></u>
+        <u url="http://www.baidu.com" text="百度"></u>
+        <br>
+        <loading></loading>
+        <h1>{{msg}}</h1>
+    </div>
+
+    <script>
+        angular.module('demoApp', [])
+            .directive('csdn', function () {
+                return {
+                    restrict: "AECM",
+                    template: "<a href='http://bbs.csdn.net/home'>点此访问CSDN论坛!!!!</a>"
+                };
+            })
+            .directive('u', function () {
+                return {
+                    restrict: "E",
+                    replace: true,
+                    scope: {
+                        url: '@', // 经过了修改
+                        text: '@'
+                    },
+                    template: '<div>\
+                                <a href="{{ url }}">{{ text }}</a>\
+                               </div>'
+                };
+            })
+            .directive('loading', function ($animate) {
+                return {
+                    restrict: 'AE',
+                    replace: true,
+                    scope: true,
+                    template: '<div class="loading" name="loading"><img alt="Loading" src="../img/ajax-loader.gif" />{{ loadingText || "加载中,请稍后..." }}</div>',
+                    link: function (scope, element, attr) {
+                        scope.$watch('loading', function (value) {
+                            if (value) {
+                                element.css("display", "block");
+                            }
+                            else {
+                                element.css("display", "none");
+                            }
+                        });
+                    }
+                }
+            })
+            .controller('demoCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
+                $scope.loading = true;
+                $timeout(function () {
+                    $scope.loading = false;
+                    $scope.msg = "加载完成";
+                }, 1500);
+            }]);
+    </script>
+</body>
+
+</html>

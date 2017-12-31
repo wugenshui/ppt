@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ng-repeat</title>
+    <script src="../framework/angular.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <div ng-controller="demoCtrl">
+        <!--<p ng-repeat="n in [1,2,3,4,5]">重复项{{n}}</p>-->
+
+        <p>使用 ng-repeat 来循环数组</p>
+        <ul>
+            <li ng-repeat="x in names">
+                {{ ($index + 1) + "." + x.name + ",来自" + x.city }}
+            </li>
+        </ul>
+
+        <ul>
+            <li ng-repeat="n in numbers track by $index">
+                {{ n }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        angular.module('demoApp', [])
+            .controller('demoCtrl', ['$scope', function ($scope) {
+                $scope.names = [
+                    { name: '张山', city: '河南' },
+                    { name: '李斯', city: '河北' },
+                    { name: '王武', city: '河东' },
+                    { name: '何六', city: '河西' }];
+                $scope.numbers = [1, 2, 3, 4, 5, 1];
+            }]);
+    </script>
+</body>
+
+</html>

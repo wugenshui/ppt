@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="MyController">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>服务</title>
+    <meta charset="utf-8" />
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
+    <style>
+        body {
+            font-size:28px;
+            text-align: center;
+        }
+    </style>
+    <script src="JS/jquery-1.10.2.js"></script>
+    <script src="JS/angular.js"></script>
+    <script>
+        angular.module('myApp', [])
+            .factory('githubService', function () {
+                console.log("githubService");
+                var serviceInstance = function add(a, b) {
+                    return a + b;
+                };
+                // 我们的第一个服务
+                return serviceInstance;
+            })
+            .service('numConvert', function() {
+                this.toHex = function (x) {
+                    return x.toString(16);
+                };
+                this.toBinary = function (x) {
+                    return x.toString(2);
+                };
+            })
+            .controller('MyController', function ($scope, githubService, numConvert) {
+                $scope.link = "abcdEGH";
+                $scope.hex = numConvert.toHex(255);
+                $scope.binary8 = numConvert.toBinary(255);
+                console.log(githubService(12, 45));
+            })
+    </script>
+</head>
+<body>
+    255的16进制形式：{{hex}}
+    <br>255的2进制形式：{{binary8}}
+</body>
+</html>

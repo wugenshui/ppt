@@ -1,0 +1,15 @@
+﻿<form name="form" role="form">
+    <select name="a" ng-change="provinceChange()" ng-model="selectedProvince" ng-options="province.name for province in data"></select>
+    <select name="b" ng-show="selectedProvince && form.b.$valid" ng-model="selectedCity" ng-options="city.name for city in selectedProvince.sub"></select>
+    <select ng-show="selectedCity && selectedCity && selectedCity.name != ''" ng-model="selectedCounty" ng-options="county.name for county in selectedCity.sub"></select>
+
+    a:{{form.a.$valid +""+  form.a.$error}}
+    <br />
+    b:{{form.b.$valid +""+  form.b.$error}}
+</form>
+<br />
+<br />
+<h1 ng-bind="'您选择的地址为：'+ selectedProvince.name + selectedCity.name + selectedCounty.name"></h1>
+<button type="submit" class="btn btn-default" ng-click="click()">查看option选中项</button>
+
+

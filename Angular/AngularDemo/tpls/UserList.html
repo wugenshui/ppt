@@ -1,0 +1,46 @@
+﻿<!-- 列表 -->
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+        <span class="col-sm-1 control-label glyphicon glyphicon-search"></span>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" ng-model="searchRule">
+        </div>
+        <div class="col-sm-2 col-sm-offset-5">
+            <button class="btn btn-sm btn-primary" ng-click="Edit(false)">
+                <span class="glyphicon glyphicon-plus"></span>
+                添加
+            </button>
+        </div>
+    </div>
+</form>
+<table class="table table-row table-striped table-bordered table-hover">
+    <tr>
+        <th style="width: 5%">序号</th>
+        <th style="width: 15%">用户名</th>
+        <th style="width: 15%">性别</th>
+        <th style="width: 15%">出生日期</th>
+        <th style="width: 15%">身高(厘米)</th>
+        <th style="width: 35%">操作</th>
+    </tr>
+    <tr ng-repeat="user in users | filter:searchRule track by $index">
+        <td>{{$index + 1}}</td>
+        <td>{{user.Name}}</td>
+        <td>{{user.Sex | filterSex}}</td>
+        <td>{{user.BirthDate}}</td>
+        <td>{{user.Height}}</td>
+        <td>
+            <button class="btn btn-xs btn-link" ng-click="Detail(user)">
+                <span class="glyphicon glyphicon-list-alt"></span>
+                详情
+            </button>
+            <button class="btn btn-xs btn-link" ng-click="Edit(true,user)">
+                <span class="glyphicon glyphicon-edit"></span>
+                编辑
+            </button>
+            <button class="btn btn-xs btn-link" ng-click="Delete(user)">
+                <span class="glyphicon glyphicon-trash"></span>
+                删除
+            </button>
+        </td>
+    </tr>
+</table>

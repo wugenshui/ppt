@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义过滤器</title>
+    <script src="../framework/angular.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <div class="container" ng-controller="demoCtrl">
+        <h1>'abcd'的长度:{{'abcd' | getTextLength}}</h1>
+        <h1 ng-bind-html="html | trustHtml"></h1>
+    </div>
+
+    <script>
+        angular.module('demoApp', [])
+            .filter('getTextLength', function () {
+                return function (input) {
+                    return input.length;
+                };
+            })
+            .filter('trustHtml', function ($sce) {
+                return function (input) {
+                    return $sce.trustAsHtml(input);
+                }
+            })
+            .controller('demoCtrl', function ($scope) {
+                $scope.html = "<input type='button' value='我是一个按钮' />";
+            });;
+    </script>
+</body>
+
+</html>

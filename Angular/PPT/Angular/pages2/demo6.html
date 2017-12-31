@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDoList</title>
+    <style>
+        .container {
+            width: 400px;
+            margin: 0 auto;
+            font-size: 30px;
+            text-align: center;
+        }
+        
+        .writer {
+            width: 400px;
+            height: 45px;
+            font-size: 25px;
+        }
+        
+        .issue {
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .delete {
+            color: red;
+            float: right;
+        }
+        
+        .tip {
+            font-size: 25px;
+            color: gray;
+        }
+    </style>
+    <!--<script src="../framework/angular.js"></script>-->
+    <script src="http://cdn.bootcss.com/angular.js/1.5.1/angular.min.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <div class="container" ng-controller="demoCtrl">
+        <h1>待办事项</h1>
+        <input class="writer" type="text" ng-model="newIssue" ng-keyup="addIssue($event)" placeholder="请输入一个待办事项,Enter键保存" />
+        <ol>
+            <li class="issue" ng-repeat="i in Issues track by $index">
+                {{ i }}<span class="delete" ng-click="delIssue($index)">X</span>
+            </li>
+        </ol>
+        <span class="tip" ng-if="Issues.length <= 0">您没有待办事项！</span>
+    </div>
+
+    <script>
+        angular.module('demoApp', [])
+            .controller('demoCtrl', ['$scope', function ($scope) {
+                $scope.newIssue = "";
+                $scope.Issues = ["阅读angular官网API", "练习angular基本语法", "完成作业"];
+                $scope.addIssue = function (e) {
+                    var keycode = window.event ? e.keyCode : e.which;
+                    if (keycode == 13) {    // 13是回车键的keycode   
+                        if ($scope.newIssue.length > 0) {
+                            $scope.Issues.push($scope.newIssue);
+                            $scope.newIssue = "";
+                        }
+                    }
+                };
+                $scope.delIssue = function (issueIndex) {
+                    $scope.Issues.splice(issueIndex, 1);
+                }
+            }]);
+    </script>
+</body>
+
+</html>

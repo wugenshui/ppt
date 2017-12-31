@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ng-model</title>
+    <script src="../framework/angular.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <div ng-controller="demoCtrl">
+        <fieldset>
+            <legend>价格统计</legend>
+            <div>
+                <label>价格:</label>
+                <input type="number" ng-model="Price" placeholder="价格" step="100" />
+            </div>
+            <div>
+                <label>数量:</label>
+                <input type="number" ng-model="Num" placeholder="数量" step="1" />
+            </div>
+            <label>总价：{{ Price * Num }}</label>
+        </fieldset>
+        <p ng-show="true">我是可见的。</p>
+        <p ng-show="false">我是不可见的。</p>
+    </div>
+
+    <script>
+        angular.module('demoApp', [])
+            .controller('demoCtrl', ['$scope', function ($scope) {
+                $scope.Price = 100;
+                $scope.Num = 18;
+            }]);
+    </script>
+</body>
+
+</html>

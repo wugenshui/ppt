@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表达式</title>
+    <script src="../framework/angular.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <div ng-controller="demoCtrl">
+        <h3>{{ "我叫" + User.Name }}</h3>
+        <h3>今年{{ User.Age }}岁了</h3>
+        <h3>好吧其实是{{ User.Age + 1 }}岁</h3>
+    </div>
+
+    <script>
+        angular.module('demoApp', [])
+            .controller('demoCtrl', ['$scope', function ($scope) {
+                $scope.User = {
+                    Name: "张三",
+                    Age: 18
+                };
+            }]);
+    </script>
+</body>
+
+</html>

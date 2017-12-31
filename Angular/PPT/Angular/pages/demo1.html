@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模块</title>
+    <script src="../framework/angular.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <!--模块一-->
+    <div ng-controller="demo1Ctrl">
+        <h1>{{ Name }}</h1>
+    </div>
+    <!--模块二-->
+    <div ng-controller="demo2Ctrl">
+        <h1>{{ Name }}</h1>
+        <!--模块三-->
+        <div ng-controller="demo3Ctrl">
+            <h1>{{ Name }}</h1>
+        </div>
+    </div>
+
+    <script>
+        var module = angular.module('demoApp', []);
+        module.controller('demo1Ctrl', function ($scope, $rootScope) {
+            $rootScope.Name = "Root";
+            $scope.Name = "一";
+        })
+            .controller('demo2Ctrl', function ($scope) {
+                $scope.Name = "二";
+            })
+            .controller('demo3Ctrl', ["$scope", function ($scope) {
+                $scope.Name = "三";
+            }]);
+    </script>
+</body>
+
+</html>

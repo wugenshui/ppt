@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="MyController">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
+    <script src="JS/jquery-1.10.2.js"></script>
+    <script src="JS/angular.js"></script>
+    <script>
+        document.createElement('my-directive');
+        var count = 1;
+        //document.createElement('you');
+        angular.module('myApp', [])
+            .controller('MyController', function ($scope, $http) {
+                $scope.link = "abcdEGH";
+                $http.get("JS/data.js")
+                .success(function (data) {
+                    console.log(data);
+                }).error(function () {
+                    console.log("请求失败");
+                });
+
+                // $http.get("GetUsers.ashx")
+                // .success(function (data) {
+                //     console.log(data);
+                // }).error(function () {
+                //     console.log("请求失败");
+                // });
+            })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

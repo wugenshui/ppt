@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
+    <script src="JS/jquery-1.10.2.js"></script>
+    <script src="JS/angular.js"></script>
+    <script src="JS/angular-animate.js"></script>
+</head>
+<style>
+body{
+text-align: center;
+}
+    input {
+        width:100%;
+        height:100%;
+        min-height: 30px;
+    }
+    .divDetail {
+        
+        width:600px;
+    }
+</style>
+<body ng-controller="myController">
+    <table class="table table-row table-striped table-bordered table-hover">
+        <tr>
+            <th style="width:5%">序号</th>
+            <th style="width:15%">姓名</th>
+            <th style="width:15%">性别</th>
+            <th style="width:15%">生日</th>
+            <th style="width:15%">身高</th>
+            <th style="width:35%">详情</th>
+        </tr>
+        <tr ng-repeat="user in users" ng-if="!edit">
+            <td>{{$index + 1}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.sex}}</td>
+            <td>{{user.birth_date | date:'yyyy-MM-dd'}}</td>
+            <td>{{user.height}}</td>
+            <td>
+                <button ng-click="showDeital(user)">详情</button>
+            </td>
+        </tr>
+        <tr ng-repeat="user in users" ng-if="edit">
+            <td>{{$index + 1}}</td>
+            <td><input ng-model="user.name" /></td>
+            <td><input ng-model="user.sex" /></td>
+            <td>{{user.birth_date | date:'yyyy-MM-dd'}}</td>
+            <td><input ng-model="user.height" /></td>
+            <td>
+                <button ng-click="showDeital(user)">详情</button>
+            </td>
+        </tr>
+    </table>
+
+    <button ng-if="!edit" ng-click="toggleEdit()">编辑</button>
+    <button ng-if="edit" ng-click="toggleEdit()">保存</button>
+
+    <br/>
+    <div class="divDetail">  
+        <ul>
+            <li>{{currentUser.name}}</li>
+            <li>{{currentUser.sex}}</li>
+            <li>{{currentUser.birth_date | date:'yyyy-MM-dd'}}</li>
+            <li>{{currentUser.height}}</li>
+            <li ng-repeat="contact in currentUser.contact_book">
+                {{(contact.type | getContactType)+":"+contact.contact}}   
+            </li>
+        </ul>
+    <div>
+    <script>
+        angular.module('myApp', [])
+        .filter('getContactType', function () {
+                return function (input) {
+                    var result = "";
+                    switch(input)
+                    {
+                        case 0:
+                            result = "手机";
+                            break;
+                        case 1:
+                            result = "电话";
+                            break;
+                        case 2:
+                            result = "邮箱";
+                            break;
+                        default:
+                            result = "其它";
+                    } 
+                    var types = ["手机","电话","邮箱"];
+                    result = types[input];
+
+                    return result;
+                };
+            })
+            .controller("myController", function($rootScope, $scope, $http) {
+                $scope.edit = false;
+                $http.get("../JS/users.json").then(function(response){
+                    $scope.users = response.data;
+                    if($scope.users != null && $scope.users.length > 0){
+                        $scope.currentUser = $scope.users[0];
+                    }
+                });
+                $scope.toggleEdit = function() {
+                     $scope.edit = !$scope.edit;
+                };
+                $scope.showDeital = function(user) {
+                    $scope.currentUser = user;
+                };
+                // $scope.users = [{"id":1,"name":"高冰","sex":"男","birth_date":802141532000,"height":"1.76","contact_book":[{"id":1,"type":0,"contact":11122223333},{"id":2,"type":1,"contact":4219963},{"id":3,"type":2,"contact":"99999999@qq.com"}]},{"id":2,"name":"张晓虹","sex":"女","birth_date":806141532000,"height":"1.61","contact_book":[{"id":1,"type":0,"contact":11122223333},{"id":2,"type":1,"contact":4219961},{"id":3,"type":2,"contact":"88888888@qq.com"}]},{"id":3,"name":"顾明","sex":"女","birth_date":846141532000,"height":"1.59","contact_book":[{"id":1,"type":0,"contact":11122223333},{"id":2,"type":1,"contact":4219963},{"id":3,"type":2,"contact":"7777777@qq.com"}]},{"id":4,"name":"周夏明","sex":"男","birth_date":706141532000,"height":"1.66","contact_book":[{"id":1,"type":0,"contact":11122223333},{"id":2,"type":1,"contact":4219963},{"id":3,"type":2,"contact":"666666@qq.com"}]},{"id":5,"name":"张伟","sex":"男","birth_date":706141532000,"height":"1.77","contact_book":[{"id":1,"type":0,"contact":11122223333},{"id":2,"type":1,"contact":4219963},{"id":3,"type":2,"contact":"55555@qq.com"}]},{"id":6,"name":"王文雄","sex":"男","birth_date":806141532000,"height":"1.80","contact_book":[{"id":1,"type":0,"contact":11122223333},{"id":2,"type":1,"contact":4219963},{"id":3,"type":2,"contact":"4444@qq.com"}]}];
+            })
+    </script>
+</body>
+</html>

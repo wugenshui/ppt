@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="MyController">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>表单验证</title>
+    <meta charset="utf-8" />
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
+    <!--<script src="JS/jquery-1.10.2.js"></script>-->
+    <script src="JS/angular.js"></script>
+    <script>
+        var myApp = angular.module("myApp", []);
+
+        myApp.directive('myPwdMatch', [function () {
+            return {
+                restrict: "A",
+                require: 'ngModel',
+                link: function (scope, element, attrs, ctrl) {
+                    var tageCtrl = scope.$eval(attrs.myPwdMatch);
+                    tageCtrl.$parsers.push(function (viewValue) {
+                        ctrl.$setValidity('pwdmatch', viewValue == ctrl.$viewValue);
+                        return viewValue;
+                    });
+                    ctrl.$parsers.push(function (viewValue) {
+                        if (viewValue == tageCtrl.$viewValue) {
+                            ctrl.$setValidity('pwdmatch', true);
+                            return viewValue;
+                        } else {
+                            ctrl.$setValidity('pwdmatch', false);
+                            return undefined;
+                        }
+                    });
+                }
+            };
+        }]);
+
+        myApp.directive('myFocusValid', [function () {
+            return {
+                restrict: "A",
+                require: 'ngModel',
+                link: function (scope, element, attrs, ctrl) {
+                    ctrl.$focused = false;
+                    ctrl.$blured = true;
+                    element.bind("focus", function (evt) {
+                        scope.$apply(function () {
+                            ctrl.$focused = true;
+                            ctrl.$blured = false;
+                        });
+                    }).bind("blur", function (evt) {
+                        scope.$apply(function () {
+                            ctrl.$focused = false;
+                            ctrl.$blured = true;
+                        });
+                    });
+                }
+            };
+        }]);
+
+        myApp.controller("MyController", ["$scope", "$http", function ($scope, $http) {
+            $scope.safeTypes = [{
+                value: 0,
+                text: "不保存账户状态"
+            }, {
+                value: 30,
+                text: "保存半个小时"
+            }, {
+                value: 60,
+                text: "保存一个小时"
+            }, {
+                value: 180,
+                text: "保存三个小时"
+            }, {
+                value: 60 * 24,
+                text: "保存一天"
+            }, {
+                value: 60 * 24 * 7,
+                text: "保存一周"
+            }, {
+                value: 60 * 24 * 30,
+                text: "保存一个月"
+            }];
+
+            $scope.$watch("formArgs.username", function (newVal, oldVal) {
+                var ctrl = $scope.myForm.username;
+                var usedNames = ctrl.$usedNames;
+                if (usedNames && usedNames[newVal]) {
+                    ctrl.$setValidity('remoted', false);
+                } else {
+                    ctrl.$setValidity('remoted', true);
+                }
+            });
+
+            $scope.doSubmit = function () {
+                var username = $scope.formArgs ? $scope.formArgs.username : undefined;
+                var ctrl = $scope.myForm.username;
+                if (username) {
+                    $http({
+                        method: 'POST',
+                        url: 'json/check-username.json',
+                        data: {
+                            username: username
+                        }
+                    }).success(function (resp) {
+                        if (resp.status != "success") {
+                            ctrl.$setValidity('remoted', false);
+                            if (ctrl.$usedNames) {
+                                ctrl.$usedNames[username] = true;
+                            } else {
+                                var obj = {};
+                                obj[username] = true;
+                                ctrl.$usedNames = obj;
+                            }
+                        } else {
+                            ctrl.$setValidity('remoted', true);
+                        }
+                        if ($scope.myForm.$valid) {
+                            alert("提交表单数据");
+                        }
+                    }).error(function () {
+                        ctrl.$setValidity('remoted', false);
+                    });
+                } else {
+                    ctrl.$setValidity('remoted', true);
+                }
+                $scope.myForm.submitted = true;
+            };
+        }]);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <form name="myForm" autocomplete="off" ng-submit="doSubmit()" novalidate>
+                    <fieldset>
+                        <legend>My AngularJS Form</legend>
+                        <div class="form-group" ng-class="{'has-error':myForm.submitted && myForm.username.$invalid}">
+                            <label for="username"><code>*</code>用户名称</label>
+                            <!---->
+                            <input type="text" class="form-control" name="username" ng-model="formArgs.username" ng-minlength="5" ng-maxlength="30" required>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.username.$error.required">请输入5-30个字符的用户名称！</span>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.username.$error.minlength">输入的用户名必须在5至30个字符之间！</span>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.username.$error.remoted">输入的用户名称已经被使用！</span>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':myForm.submitted && myForm.userEmail.$invalid}">
+                            <label for="userEmail"><code>*</code>用户邮箱</label>
+                            <!---->
+                            <input type="email" class="form-control" name="userEmail" ng-model="formArgs.userEmail" maxlength="30" required>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.userEmail.$error.required">请输入您常用的电子邮箱！</span>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.userEmail.$error.email">输入的电子邮箱地址有误！</span>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':myForm.submitted && myForm.password.$invalid}">
+                            <label for="password"><code>*</code>用户密码</label>
+                            <!---->
+                            <input type="password" class="form-control" name="password" ng-model="formArgs.password" ng-minlength="8" ng-maxlength="30" required>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.password.$error.required">请输入8-30个字符的用户密码！</span>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.password.$error.minlength">输入的重复密码必须在8至30个字符之间！</span>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':myForm.submitted && myForm.rpassword.$invalid}">
+                            <label for="rpassword"><code>*</code>重复密码</label>
+                            <!---->
+                            <input type="password" class="form-control" name="rpassword" ng-model="tmpArgs.rpassword" ng-minlength="8" ng-maxlength="30"
+                                   my-pwd-match="myForm.password" required>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.rpassword.$error.required">请输入8-30个字符的重复密码！</span>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.rpassword.$error.minlength">输入的重复密码必须在8至30个字符之间！</span>
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.rpassword.$error.pwdmatch">重复密码必须与用户密码一致！</span>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':myForm.submitted && myForm.userUrl.$invalid}">
+                            <label for="userUrl">用户主页</label>
+                            <!---->
+                            <input type="url" class="form-control" name="userUrl" ng-model="formArgs.userUrl" maxlength="200">
+                            <!---->
+                            <span class="help-block" ng-show="myForm.submitted && myForm.userUrl.$error.url">输入的网址有误，网址必须以 http:// 开头！</span>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':myForm.submitted && myForm.userAge.$invalid}">
+                            <label for="userAge">用户年龄</label>
+                            <!---->
+                            <input type="number" class="form-control" name="userAge" ng-model="formArgs.userAge" min="0" max="150">
+                            <!---->
+
+                            <span class="help-block" ng-show="myForm.submitted && (myForm.userAge.$error.number || myForm.userAge.$error.min || myForm.userAge.$error.max)">输入的年龄有误，年龄范围为0-150！</span>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':myForm.submitted && myForm.safeType.$invalid}">
+                            <label for="safeType"><code>*</code>安全选项</label>
+                            <!---->
+                            <select class="form-control" name="safeType" ng-model="formArgs.safeType" ng-options="it.value as it.text for it in safeTypes" required>
+                                <option value="">--请选择--</option>
+                            </select>
+                            <span class="help-block" ng-show="myForm.submitted && myForm.safeType.$error.required">请选择安全选项！</span>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':myForm.submitted && myForm.privateType.$invalid}">
+                            <label><code>*</code>谁可以找到我</label>
+                            <div class="radio" ng-init="formArgs.privateType='member'">
+                                <label><input type="radio" name="privateType" value="all" ng-model="formArgs.privateType"> 所与人</label>
+                                <!---->
+                                <label><input type="radio" name="privateType" value="member" ng-model="formArgs.privateType" checked> 注册会员</label>
+                                <!---->
+                                <label><input type="radio" name="privateType" value="self" ng-model="formArgs.privateType"> 只有我自己</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-warning" type="reset">重置</button>
+                            <button class="btn btn-primary" type="submit">提交</button>
+                            <button class="btn btn-primary" type="button">自定义</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <p>{{formArgs|json}}</p>
+                <p>{{myForm|json}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

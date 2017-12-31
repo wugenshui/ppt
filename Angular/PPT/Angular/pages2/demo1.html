@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统过滤器</title>
+    <script src="../framework/angular.js"></script>
+</head>
+
+<body ng-app="demoApp">
+    <div class="container" ng-controller="demoCtrl">
+        <h1>{{link | uppercase}}</h1>
+        <h1>{{link | lowercase}}</h1>
+        <h1>{{num1 | number:2}}</h1>
+        <h1>{{num2 | number:2}}</h1>
+        <h1>{{num1 | currency}}</h1>
+        <h1>{{time | date:'yyyy-MM-dd HH:mm:ss.sss'}}</h1>
+        <div ng-repeat="name in names | filter:'张'">
+            <h1>{{name}}</h1>
+        </div>
+        <h1>{{ persons | filter:{'favorite food': 'Pizza'} }}</h1>
+        <h1>'首字母大写的项':{{ ['Ari','Likes','to','travel'] | filter:isCapitalized }}</h1>
+    </div>
+
+    <script>
+        angular.module('demoApp', [])
+            .controller('demoCtrl', ['$scope', function ($scope) {
+                $scope.link = "abcdEGH";
+                $scope.num1 = "123";
+                $scope.num2 = "123.234";
+                $scope.time = new Date();
+                $scope.names = ["张三", "李四", "王五", "何六", "张思德"];
+                $scope.persons = [{
+                    'name': 'Ari',
+                    'City': 'San Francisco',
+                    'favorite food': 'Pizza'
+                }, {
+                    'name': 'Nate',
+                    'City': 'San Francisco',
+                    'favorite food': 'indian food'
+                }];
+                $scope.isCapitalized = function (str) {
+                    return str[0] == str[0].toUpperCase();
+                };
+            }]);
+    </script>
+</body>
+
+</html>
