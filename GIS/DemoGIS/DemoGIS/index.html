@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>谷歌地图</title>
+    <meta charset="utf-8" />
+    <style>
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <!-- 谷歌地图地址，被墙 -->
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzE9xAESye6Kde-3hT-6B90nfwUkcS8Yw&sensor=false"></script>-->
+    <script src="http://ditu.google.cn/maps/api/js?key=AIzaSyBzE9xAESye6Kde-3hT-6B90nfwUkcS8Yw&sensor=false"></script>
+
+    <script>
+        function initMap() {
+            // 初始化地图
+            var map = new google.maps.Map(document.getElementById("map"), {
+                // 左边是纬度坐标，右边是经度坐标
+                center: new google.maps.LatLng(23.144065, 113.347128),
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            // 初始化标记
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(23.1437447551, 113.3464903250),
+                icon: 'pikachu.png',
+                animation: google.maps.Animation.BOUNCE,
+                title: "皮卡丘"
+            });
+            marker.setMap(map);
+            // 注册事件
+            google.maps.event.addListener(marker, 'click', function () {
+                map.setZoom(19);
+                map.setCenter(marker.getPosition());
+            });
+        }
+
+        window.onload = initMap;
+    </script>
+</body>
+</html>
