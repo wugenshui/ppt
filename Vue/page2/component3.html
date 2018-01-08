@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自组件向父组件传递值</title>
+    <link href="../style/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="v-model-example">
+        <father-button></father-button>
+    </div>
+
+    <script src="../framework/vue.js"></script>
+    <script type="x/template" id="template">
+        <div>
+            父组件：{{ count }}
+            <br/> 子组件1：
+            <son-button @fatherBtnClick="fatherBtnClick"></son-button>
+            子组件2：
+            <son-button @fatherBtnClick="fatherBtnClick"></son-button>
+        </div>
+    </script>
+    <script>
+        Vue.component('father-button', {
+            template: '#template',
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                fatherBtnClick: function () {
+                    this.count++;
+                }
+            }
+        })
+        Vue.component('son-button', {
+            template: '<button @click="sonBtnClick">{{ count }}</button>',
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                sonBtnClick: function (event) {
+                    this.count++;
+                    // 触发父组件input方法
+                    this.$emit('fatherBtnClick');
+                }
+            }
+        })
+        new Vue({
+            el: '#v-model-example',
+            data: {
+                message: 'hello'
+            }
+        })
+    </script>
+</body>
+
+</html>

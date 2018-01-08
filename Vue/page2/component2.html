@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件</title>
+    <link href="../style/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>myButton</legend>
+            <input type="text" v-model="txt" />
+        </fieldset>
+
+        <fieldset>
+            <legend>my-button2</legend>
+            <my-input style="color:red;font-size:25px;" :txt="txt"></my-input>
+        </fieldset>
+    </div>
+
+    <script src="../framework/vue.js"></script>
+
+    <script type="x/template" id="template">
+        <input type="text" v-model="txt" />
+    </script>
+    <script>
+        Vue.component('my-input', {
+            template: '#template',
+            props: { 'txt': Number }
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                txt: '默认文本'
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义指令</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        img {
+            height: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <textarea v-model="txtInfo" v-auto-height></textarea>
+        <br/>
+        <input type="text" />
+        <input type="text" v-focus />
+        <input type="text" />
+        <br/>
+        <button @click="hideImg = !hideImg;">显示/隐藏图片</button>
+        <br/>
+        <img v-hide="hideImg" src="../image/sea.jpg" />
+    </div>
+
+    <script src="../framework/vue.js"></script>
+    <script>
+        // 自定义全局指令
+        Vue.directive('focus', {
+            // 当绑定元素插入到 DOM 中。
+            inserted: function (el) {
+                // 聚焦元素
+                el.focus();
+            }
+        })
+
+        // 注册局部指令
+        new Vue({
+            el: '#app',
+            data: {
+                txtInfo: '字符串主要用于编程，概念说明、函数解释、用法详述见正文，这里补充一点：字符串在存储上类似字符数组，所以它每一位的单个元素都是可以提取的，如s=“abcdefghij”，则s[1]=“a”，s[9]="j"，而字符串的零位正是它的长度，如s[0]=10，这可以给我们提供很多方便，如高精度运算时每一位都可以转化为数字存入数组。',
+                hideImg: false
+            },
+            directives: {
+                'auto-height': function (el) {
+                    // 当数据模型的更改更新到界面后
+                    Vue.nextTick(function () {
+                        el.style.height = "auto";
+                        el.style.height = el.scrollHeight + "px";
+                    })
+                },
+                hide: function (el, binding) {
+                    if (binding.value) {
+                        el.style.display = "none";
+                    } else {
+                        el.style.display = "inline-block";
+                    }
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

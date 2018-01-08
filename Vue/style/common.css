@@ -1,0 +1,31 @@
+fieldset {
+    margin-bottom:50px;
+    border-style: solid;
+}
+
+table {
+    margin-top:50px;
+    border-collapse: collapse;
+    text-align: center;
+}
+tr {
+    min-height: 50px;
+}
+th,td {
+    border:1px solid black;
+    min-width: 100px;
+    height:30px;
+}
+
+.btn {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 12px;
+    outline: none;
+}

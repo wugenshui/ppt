@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件绑定</title>
+</head>
+
+<body>
+    <div id="app">
+        {{ text }}
+        <br><button v-on:click="myHandle($event)">v-on:click</button>
+        <br><button @click="myHandle($event)">@click</button>
+        <br><button @click.once="myHandle($event)">@click.once</button>
+        <br><button @keyup.13="myHandle($event)">onEnter</button>
+    </div>
+
+    <script src="../framework/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                text: 'default'
+            },
+            methods: {
+                myHandle: function (event) {
+                    this.text = event.target.innerText;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

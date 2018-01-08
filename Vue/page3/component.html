@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件</title>
+    <link href="../style/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+    </div>
+
+    <script>
+        // 访问器属性是对象中的一种特殊属性，它不能直接在对象中设置，而必须通过 defineProperty() 方法单独定义。
+        var obj = {};
+        var temp = "";
+        // 为obj定义一个名为 hello 的访问器属性
+        Object.defineProperty(obj, "hello", {
+            get: function () {
+                console.log("触发get方法");
+                return temp;
+            },
+            set: function (val) {
+                console.log("触发set方法");
+                temp = val;
+            }
+        });
+
+        obj.hello = obj.hello + "newValue";
+    </script>
+</body>
+
+</html>

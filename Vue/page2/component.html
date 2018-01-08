@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件</title>
+    <link href="../style/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>myButton</legend>
+            <my-button></my-button>
+        </fieldset>
+
+        <fieldset>
+            <legend>my-button2</legend>
+            <my-button2></my-button2>
+        </fieldset>
+    </div>
+
+    <script src="../framework/vue.js"></script>
+
+    <script type="x/template" id="template">
+        <button class="btn">第二个按钮</button>
+    </script>
+    <script>
+        Vue.component('myButton', {
+            template: '<button class="btn">第一个按钮</button>'
+        });
+        Vue.component('my-button2', {
+            template: '#template',
+        });
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                text: 'default'
+            }
+        });
+    </script>
+</body>
+
+</html>

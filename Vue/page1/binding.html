@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据绑定</title>
+    <link href="../style/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>插值:元素的innerText</legend>
+            <h1>{{ myExp }}</h1>
+            <h1 v-text="myHtml"></h1>
+        </fieldset>
+
+        <fieldset>
+            <legend>单向绑定</legend>
+            <input type="text" v-bind:value="myBind" :name="'txtSingleBind'" :readonly="false" />
+            <span>{{ myBind }}</span>
+        </fieldset>
+
+        <fieldset>
+            <legend>双向绑定</legend>
+            <input type="text" v-model="myModel" />
+            <span>{{ myModel }}</span>
+        </fieldset>
+
+        <fieldset>
+            <legend>绑定HTML:元素的innerHTML</legend>
+            <div v-html="myHtml"></div>
+        </fieldset>
+    </div>
+
+    <script src="../framework/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                myExp: '表达式',
+                myBind: 'bind',
+                myModel: 'model',
+                myHtml: '<button>这是一个按钮</button>'
+            }
+        });
+    </script>
+</body>
+
+</html>
