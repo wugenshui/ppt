@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax</title>
+    <script src="jquery-3.0.0.min.js"></script>
+</head>
+
+<body>
+    <p>我是p元素，点击复制</p>
+
+    <script>
+        $.support.cors = true;
+        // 新增的元素没有点击事件
+        $.get("http://gc.ditu.aliyun.com/geocoding?a=%E8%8B%8F%E5%B7%9E%E5%B8%82").done(function (data) {
+            console.log(data);
+        })
+
+        // 新增的元素带有点击事件
+        // $("body").on("click", "p", function (event) {
+        //     $("body").append('<p>我是p元素，点击复制</p>');
+        // })
+    </script>
+</body>
+
+</html>

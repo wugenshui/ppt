@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件动态绑定</title>
+    <script src="jquery-3.0.0.min.js"></script>
+</head>
+
+<body>
+    <p>我是p元素，点击复制</p>
+
+    <script>
+        // 新增的元素没有点击事件
+        $("p").click(function (event) {
+            $("body").append('<p>我是p元素，点击复制</p>');
+        })
+
+        // 新增的元素带有点击事件
+        // $("body").on("click", "p", function (event) {
+        //     $("body").append('<p>我是p元素，点击复制</p>');
+        // })
+    </script>
+</body>
+
+</html>

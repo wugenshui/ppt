@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件</title>
+    <script src="jquery-3.0.0.min.js"></script>
+</head>
+
+<body>
+    <p>我是p元素</p>
+
+    <script>
+        function elementClick() {
+            // alert($(this)[0].nodeName + "元素被点击了!");
+        }
+        $(document).click(elementClick);
+        $("html").click(elementClick);
+        $("body").click(elementClick);
+
+        $("p").click(function (event) {
+            // event.stopPropagation();     // 阻止事件冒泡
+            // return false;                // 阻止后面的代码执行、阻止事件冒泡
+            alert($(this)[0].nodeName + "元素被点击了!");// $(this) 代表执行事件的元素
+        })
+    </script>
+</body>
+
+</html>
