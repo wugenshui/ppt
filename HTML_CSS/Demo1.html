@@ -5,24 +5,36 @@
     <meta charset="UTF-8">
     <title>块级元素&行内元素</title>
     <style>
-        .div1 {
+        .block {
             border: 1px solid red;
             height: 100px;
         }
-        
-        .span1 {
+
+        .inline {
             /*display: inline-block;*/
             border: 1px solid blue;
             margin-left: 50px;
             margin-top: 50px;
             width: 200px;
         }
+
+        .box {
+            /* box-sizing: border-box; */
+            border: 10px solid red;
+            height: 80px;
+            width: 80px;
+            padding: 10px;
+            margin: 10px;
+            font: 18px '宋体';
+        }
     </style>
 </head>
 
 <body>
-    <div class="div1"></div>
-    <span class="span1">这是一段文本</span>
+    <div class="block"></div>
+    <span class="inline">这是一段文本</span>
+
+    <div class="box">盒子模型</div>
 </body>
 
 </html>
