@@ -13,27 +13,31 @@
     <input id="msg" type="text" placeholder="请输入一条消息">
     <button type="button" onclick="save()">保存信息</button>
     <p>消息列表</p>
-    <p id="list"></p>
+    <ul id="list"></ul>
     <script>
         var baseUrl = "http://192.168.0.135:10000/api/";    // 没做跨域处理的接口
-        baseUrl = "http://192.168.0.135:10001/api/";      // 设置了跨域处理的接口
+        // baseUrl = "http://192.168.0.135:10001/api/";      // 设置了跨域处理的接口
         baseUrl = "http://localhost:10000/api/";
 
-        $.support.cors = true; // ie8跨域还需要添加这个属性
-
         showMsg();
+        // 保存消息
         function save() {
             var data = { msg: $("#msg").val() };
             $.post(baseUrl + "news", data).done(function (data) {
                 console.log(data);
                 showMsg();
-            })
+                $("#msg").val("");
+            });
         }
 
+        // 展示消息列表
         function showMsg() {
             $.get(baseUrl + "news").done(function (data) {
-                for (var i = 0;i<data.)
-                    $("#list").html(JSON.stringify(data));
+                var content = "";
+                for (var i = 0; i < data.length; i++) {
+                    content += "<li>" + data[i].msg + "</li>"
+                }
+                $("#list").html(content);
             })
         }
     </script>
