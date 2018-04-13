@@ -10,19 +10,32 @@
 </head>
 
 <body>
-    <p>我是p元素，点击复制</p>
-
+    <input id="msg" type="text" placeholder="请输入一条消息">
+    <button type="button" onclick="save()">保存信息</button>
+    <p>消息列表</p>
+    <p id="list"></p>
     <script>
-        $.support.cors = true;
-        // 新增的元素没有点击事件
-        $.get("http://gc.ditu.aliyun.com/geocoding?a=%E8%8B%8F%E5%B7%9E%E5%B8%82").done(function (data) {
-            console.log(data);
-        })
+        var baseUrl = "http://192.168.0.135:10000/api/";    // 没做跨域处理的接口
+        baseUrl = "http://192.168.0.135:10001/api/";      // 设置了跨域处理的接口
+        baseUrl = "http://localhost:10000/api/";
 
-        // 新增的元素带有点击事件
-        // $("body").on("click", "p", function (event) {
-        //     $("body").append('<p>我是p元素，点击复制</p>');
-        // })
+        $.support.cors = true; // ie8跨域还需要添加这个属性
+
+        showMsg();
+        function save() {
+            var data = { msg: $("#msg").val() };
+            $.post(baseUrl + "news", data).done(function (data) {
+                console.log(data);
+                showMsg();
+            })
+        }
+
+        function showMsg() {
+            $.get(baseUrl + "news").done(function (data) {
+                for (var i = 0;i<data.)
+                    $("#list").html(JSON.stringify(data));
+            })
+        }
     </script>
 </body>
 
