@@ -15,15 +15,11 @@
     <p>消息列表</p>
     <ul id="list"></ul>
     <script>
-        var baseUrl = "http://192.168.0.135:10000/api/";    // 没做跨域处理的接口
-        // baseUrl = "http://192.168.0.135:10001/api/";      // 设置了跨域处理的接口
-        baseUrl = "http://localhost:10000/api/";
-
         showMsg();
         // 保存消息
         function save() {
             var data = { msg: $("#msg").val() };
-            $.post(baseUrl + "news", data).done(function (data) {
+            $.post("http://127.0.0.1:8080/save", data).done(function (data) {
                 console.log(data);
                 showMsg();
                 $("#msg").val("");
@@ -32,7 +28,7 @@
 
         // 展示消息列表
         function showMsg() {
-            $.get(baseUrl + "news").done(function (data) {
+            $.get("http://127.0.0.1:8080/list").done(function (data) {
                 var content = "";
                 for (var i = 0; i < data.length; i++) {
                     content += "<li>" + data[i].msg + "</li>"
