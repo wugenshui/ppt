@@ -8,11 +8,11 @@
     <title>Document</title>
     <script src="./jquery-3.0.0.min.js"></script>
     <script>
-        did();  // 此时did虽然调用了，但h1元素还没有渲染完成，赋值失败
+        change();  // 此时change方法虽然调用了，但h1元素还没有渲染完成，赋值失败
         $(function () {
         })
 
-        function did() {
+        function change() {
             console.log('调用did');
             debugger;
             $("#h1").html('1234');
