@@ -1,15 +1,20 @@
 <template>
     <div>
-        Home
-    </div>	
+        <!-- page-home.html -->
+        <h1>Angular Animations Shenanigans</h1>
+        <h2>Home</h2>
+
+        <a href="#about" class="btn btn-success btn-lg">About</a>
+        <a href="#contact" class="btn btn-danger btn-lg">Contact</a>
+    </div>
 </template>
 
 <script>
 export default {
   data: function() {
-    return {};
+    return {}
   }
-};
+}
 </script>
 
 <style scoped>
