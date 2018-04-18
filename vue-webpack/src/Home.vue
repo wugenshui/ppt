@@ -1,7 +1,7 @@
 <template>
   <div class="page page-home">
     <!-- page-home.html -->
-    <h1>Angular Animations Shenanigans</h1>
+    <h1>Vue Animations Shenanigans</h1>
     <h2>Home</h2>
 
     <router-link to="/about" class="btn btn-success btn-lg">Go to About</router-link>

@@ -11,9 +11,12 @@ module.exports = {
     rules: [
       { test: /\.vue$/, loader: ["vue-loader"], exclude: /node_modules/ },
       { test: /\.css$/, use: ["style-loader", "css-loader"] }
-      //   { test: /\.(png|svg|jpg|gif|ico)$/, use: ["file-loader"] },
     ]
   },
-  plugins: [new HtmlWebpackPlugin({ template: "src/index.html" })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "src/index.html"
+    })
+  ],
   mode: "production"
 }
