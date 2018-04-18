@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>布局</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .header {
+            position: absolute;
+            top: 0;
+            height: 70px;
+            width: 100%;
+            background: rgb(88, 183, 255);
+            color: #fff;
+            font: normal 1 14px;
+            line-height: 70px;
+            text-indent: 20px;
+        }
+
+        .center {
+            position: absolute;
+            top: 70px;
+            bottom: 40px;
+            width: 100%;
+        }
+
+        .center .menu {
+            height: 100%;
+            width: 200px;
+            float: left;
+            background: rgb(29, 140, 224);
+        }
+
+        .center .main {
+            height: 100%;
+            margin-left: 200px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .footer {
+            position: absolute;
+            height: 40px;
+            bottom: 0;
+            width: 100%;
+            background: rgb(88, 183, 255);
+            text-align: center;
+            line-height: 40px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>XXX后台管理系统</h1>
+    </div>
+    <div class="center">
+        <div class="menu"></div>
+        <div class="main">
+            <!-- <div style="height:2000px;border:1px solid black;"></div> -->
+        </div>
+    </div>
+    <div class="footer">
+        <span>Copyright ©2015-2017 All Rights Reserved.</span>
+    </div>
+</body>
+
+</html>
