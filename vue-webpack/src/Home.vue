@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <!-- page-home.html -->
-        <h1>Angular Animations Shenanigans</h1>
-        <h2>Home</h2>
+  <div class="page page-home">
+    <!-- page-home.html -->
+    <h1>Angular Animations Shenanigans</h1>
+    <h2>Home</h2>
 
-        <a href="#about" class="btn btn-success btn-lg">About</a>
-        <a href="#contact" class="btn btn-danger btn-lg">Contact</a>
-    </div>
+    <router-link to="/about" class="btn btn-success btn-lg">Go to About</router-link>
+    <router-link to="/contact" class="btn btn-danger btn-lg">Go to Contact</router-link>
+  </div>
 </template>
 
 <script>
@@ -18,5 +18,19 @@ export default {
 </script>
 
 <style scoped>
+.page-home {
+  background: #00d0bc;
+  color: #00907c;
+}
 
+.fade-enter-active,
+.fade-leave-active {
+  animation: scaleUp 1s both ease-in;
+}
+
+.fade-enter,
+.fade-leave-to {
+  transform-origin: 0% 0%;
+  animation: rotateFall 1s both ease-in;
+}
 </style>

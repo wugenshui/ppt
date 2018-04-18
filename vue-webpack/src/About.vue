@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <!-- page-about.html -->
-        <h1>Animating Pages Is Fun</h1>
-        <h2>About</h2>
+  <div class="page page-about">
+    <!-- page-about.html -->
+    <h1>Animating Pages Is Fun</h1>
+    <h2>About</h2>
 
-        <a href="#" class="btn btn-primary btn-lg">Home</a>
-        <a href="#contact" class="btn btn-danger btn-lg">Contact</a>
-    </div>
+    <router-link to="/" class="btn btn-primary btn-lg">Home</router-link>
+    <router-link to="/contact" class="btn btn-danger btn-lg">Contact</router-link>
+  </div>
 </template>
 
 <script>
@@ -18,5 +18,18 @@ export default {
 </script>
 
 <style scoped>
+.page-about {
+  background: #e59400;
+  color: #a55400;
+}
 
+.fade-enter-active,
+.fade-leave-active {
+  animation: slideInRight 1s both ease-in;
+}
+
+.fade-enter,
+.fade-leave-to {
+  animation: slideOutLeft 1s both ease-in;
+}
 </style>
