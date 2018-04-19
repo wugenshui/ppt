@@ -78,14 +78,14 @@
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.action-enter-active,
+.action-leave-active {
   animation: scaleUp 0.5s both ease-in;
   z-index: 8888;
 }
 
-.fade-enter,
-.fade-leave-to {
+.action-enter,
+.action-leave-to {
   animation: slideOutLeft 0.5s both ease-in;
   z-index: 9999;
 }

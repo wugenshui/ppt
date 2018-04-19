@@ -23,13 +23,13 @@ export default {
   color: #a55400;
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.action-enter-active,
+.action-leave-active {
   animation: slideInRight 1s both ease-in;
 }
 
-.fade-enter,
-.fade-leave-to {
+.action-enter,
+.action-leave-to {
   animation: slideOutLeft 1s both ease-in;
 }
 </style>

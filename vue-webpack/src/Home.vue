@@ -23,13 +23,13 @@ export default {
   color: #00907c;
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.action-enter-active,
+.action-leave-active {
   animation: scaleUp 1s both ease-in;
 }
 
-.fade-enter,
-.fade-leave-to {
+.action-enter,
+.action-leave-to {
   transform-origin: 0% 0%;
   animation: rotateFall 1s both ease-in;
 }

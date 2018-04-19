@@ -23,14 +23,14 @@ export default {
   color: #9e0000;
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.action-enter-active,
+.action-leave-active {
   transform-origin: 50% 50%;
   animation: rotateOutNewspaper 1s both ease-in;
 }
 
-.fade-enter,
-.fade-leave-to {
+.action-enter,
+.action-leave-to {
   animation: slideInUp 1s both ease-in;
 }
 </style>
