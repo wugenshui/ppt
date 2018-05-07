@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue TodoList</title>
+    <style>
+        body {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .finish {
+            text-decoration: line-through;
+        }
+    </style>
+    <script src="./frame/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app" @keyup.enter="addItem">
+        <input type="text" v-model="newItem" placeholder="请输入一个待办任务！" />
+        <ul class="items">
+            <li v-for="(item,index) in items" :key="index">
+                <h4 :class="item.type==1 ? 'finish' : ''">{{ item.desc }}</h4>
+                <button type="button" @click="toggleType(item)">转换</button>
+                <button type="button" @click="delItem(index)">删除</button>
+            </li>
+        </ul>
+        待办任务数量：{{ todoCount }}
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                newItem: "",
+                items: [
+                    { desc: "学习Vue官网教程", type: 1 },
+                    { desc: "打开冰箱", type: 0 },
+                    { desc: "haha", type: 0 },
+                    { desc: "把大象放进冰箱分几步？", type: 0 },
+                ]
+            },
+            methods: {
+                addItem: function () {
+                    if (this.newItem.length > 0) {
+                        this.items.push({ desc: this.newItem, type: 0 });
+                        this.newItem = "";
+                    } else {
+                        alert("待办任务不能为空!");
+                    }
+                },
+                toggleType: function (item) {
+                    if (item.type == 0) {
+                        item.type = 1
+                    } else {
+                        item.type = 0
+                    }
+                },
+                delItem: function (index) {
+                    this.items.splice(index, 1);
+                }
+            },
+            computed: {
+                todoCount() { // 待办任务数量
+                    return this.items.filter(function (item) {
+                        return item.type == 0;
+                    }).length;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
