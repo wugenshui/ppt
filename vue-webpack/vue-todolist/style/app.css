@@ -20,6 +20,8 @@ body {
   margin: 0 auto;
   background: #17a2b8;
   text-align: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 fieldset {
@@ -79,6 +81,7 @@ ul.items li {
   height: 100%;
   overflow: auto;
   font-weight: normal;
+  padding: 5px;
 }
 
 .item .refresh,

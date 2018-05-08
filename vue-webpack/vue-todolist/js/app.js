@@ -4,9 +4,9 @@ new Vue({
     newItem: "",
     items: [
       { desc: "学习Vue官网教程", type: 1 },
-      { desc: "打开冰箱", type: 0 },
-      { desc: "haha", type: 0 },
-      { desc: "把大象放进冰箱分几步？", type: 0 }
+      { desc: "编写Vue小Demo", type: 1 },
+      { desc: "阅读Vue相关资料", type: 0 },
+      { desc: "完成一个小型的项目", type: 0 }
     ]
   },
   methods: {
