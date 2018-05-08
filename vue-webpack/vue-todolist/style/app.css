@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 清除浮动 */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+body {
+  width: 800px;
+  margin: 0 auto;
+  background: #17a2b8;
+  text-align: center;
+}
+
+fieldset {
+  text-align: left;
+  border: 3px solid #007bff;
+  margin: 10px;
+  padding: 10px 5px;
+}
+
+fieldset.finish {
+  border-color: #6c757d;
+}
+
+legend {
+  margin-left: 20px;
+  color: white;
+  padding: 0 5px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.input {
+  width: 600px;
+  font-size: 30px;
+  margin: 25px 0 15px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+ul.items {
+  list-style: none;
+}
+
+ul.items li {
+  width: 33.3%;
+  float: left;
+  padding: 5px;
+}
+
+.item {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  font-size: 20px;
+  background: #007bff;
+  border-radius: 10px;
+  color: white;
+}
+
+.finish .item {
+  background: #6c757d;
+}
+
+.item h4 {
+  height: 100%;
+  overflow: auto;
+  font-weight: normal;
+}
+
+.item .refresh,
+.item .close {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.item .refresh {
+  left: 0;
+}
+
+.item .close {
+  right: 0;
+}
+
+.item .refresh:hover,
+.item .close:hover {
+  opacity: 0.2;
+}
