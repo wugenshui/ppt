@@ -46,10 +46,12 @@
         <ul>
             <li v-for="(val,key) in user">{{ key + ':' + val }}</li>
         </ul>
+
+        <button @click="changeUser">改变</button>
     </div>
 
     <script>
-        new Vue({
+        var app = new Vue({
             el: '#app',
             data: {
                 isShow1: true,
@@ -72,6 +74,14 @@
                 filterSex: function (value) {
                     var sex = ['男', '女'];
                     return sex[value];
+                }
+            },
+            methods: {
+                changeUser: function () {
+                    // 通过索引直接设置项无法触发更改
+                    this.users[0] = { 'name': '齐德龙东强', age: 18, sex: 0 };
+                    // 可以通过Vue.set来修改
+                    this.$set(this.users, 0, { 'name': '齐德龙东强', age: 18, sex: 0 });
                 }
             }
         });
