@@ -1,7 +1,8 @@
 var express = require("express")
 var bodyParser = require("body-parser")
 var app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json()) // json
+// app.use(bodyParser.urlencoded({ extended: false }))  // urlencoded
 var hostName = "127.0.0.1"
 var port = 8080
 var data = [] // 存储的消息列表

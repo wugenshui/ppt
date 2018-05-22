@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ajax</title>
     <script src="jquery-3.0.0.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -19,8 +20,13 @@
         // 保存消息
         function save() {
             var data = { msg: $("#msg").val() };
-            $.post("http://127.0.0.1:8080/save", data).done(function (data) {
-                console.log(data);
+            // $.post("http://127.0.0.1:8080/save", data).done(function (data) {
+            //     console.log(data);
+            //     showMsg();
+            //     $("#msg").val("");
+            // });
+            axios.post("http://127.0.0.1:8080/save", data).then(function (res) {
+                console.log(res.data);
                 showMsg();
                 $("#msg").val("");
             });
